@@ -1,8 +1,7 @@
 ﻿@page "/formlibro/edit/{idLibro}"
-<h3>LibroFormEditPage</h3>
-<FormLibro/>
+<FormLibro idLibro="int.Parse(idLibro)"/>
 
 @code {
     [Parameter]
-    public string? idLibro { get; set; }
+    public string? idLibro { get; set; } = null!;
 }

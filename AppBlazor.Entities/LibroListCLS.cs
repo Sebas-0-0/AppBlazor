@@ -8,6 +8,7 @@ namespace AppBlazor.Entities
 {
     public class LibroListCLS
     {
+
         public int idLibro { get; set; }
         public string titulo { get; set; }= null!;
     }

@@ -20,5 +20,21 @@ namespace AppBalzor.Client.Services
             var listaQueda = lista.Where(p => p.idLibro != idLibro).ToList();
             lista = listaQueda;
         }
+        public LibroFormCLS RecuperarLibroPorId (int idLibro)
+        {
+            var obj = lista.Where(p => p.idLibro == idLibro).FirstOrDefault();
+            if (obj != null)
+            {
+                return new LibroFormCLS { idLibro = obj.idLibro, titulo = obj.titulo, resumen = "Rsumen"};
+            }
+            else
+            {
+                return new LibroFormCLS();
+            }
+        }
+        public void guardarLibro(LibroFormCLS oLibroFormCLS)
+        {
+            lista.Add(new LibroListCLS { idLibro = oLibroFormCLS.idLibro, titulo = oLibroFormCLS.titulo });
+        }
     }
 }
