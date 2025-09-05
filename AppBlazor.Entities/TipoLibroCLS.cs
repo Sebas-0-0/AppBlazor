@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace AppBlazor.Entities
 {
-    public class LibroListCLS
+    public class TipoLibroCLS
     {
-
-        public int idLibro { get; set; }
-        public string titulo { get; set; }= null!;
-
+        public int IdTipoLibro { get; set; }
         public string NombreTipoLibro { get; set; } = string.Empty;
     }
 }

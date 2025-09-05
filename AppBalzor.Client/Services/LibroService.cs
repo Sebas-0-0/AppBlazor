@@ -5,11 +5,13 @@ namespace AppBalzor.Client.Services
     public class LibroService
     {
         private List<LibroListCLS> lista;
-        public LibroService()
+        private TipoLibroService tipoLibroService;
+        public LibroService(TipoLibroService _tipoLibroService)
         {
+            tipoLibroService = _tipoLibroService;
             lista = new List<LibroListCLS>();
-            lista.Add(new LibroListCLS { idLibro = 1, titulo = "Libro 1" });
-            lista.Add(new LibroListCLS { idLibro = 2, titulo = "Libro 2" });
+            lista.Add(new LibroListCLS { idLibro = 1, titulo = "Caperucita Roja", NombreTipoLibro = "Cuento" });
+            lista.Add(new LibroListCLS { idLibro = 2, titulo = "Libro 2", NombreTipoLibro = "Novela" });
         }
         public List<LibroListCLS> listarLibros()
         {
@@ -25,7 +27,8 @@ namespace AppBalzor.Client.Services
             var obj = lista.Where(p => p.idLibro == idLibro).FirstOrDefault();
             if (obj != null)
             {
-                return new LibroFormCLS { idLibro = obj.idLibro, titulo = obj.titulo, resumen = "Rsumen"};
+                return new LibroFormCLS { idLibro = obj.idLibro, titulo = obj.titulo, resumen = "Rsumen",
+                    IdTipoLibro = tipoLibroService.obtenerIdTipoLibro(obj.NombreTipoLibro)};
             }
             else
             {
@@ -34,7 +37,9 @@ namespace AppBalzor.Client.Services
         }
         public void guardarLibro(LibroFormCLS oLibroFormCLS)
         {
-            lista.Add(new LibroListCLS { idLibro = oLibroFormCLS.idLibro, titulo = oLibroFormCLS.titulo });
+            int idLibro = lista.Select(p => p.idLibro).Max() + 1;
+            lista.Add(new LibroListCLS { idLibro = idLibro, titulo = oLibroFormCLS.titulo,
+            NombreTipoLibro=tipoLibroService.obtenerNombreTipoLibro(oLibroFormCLS.IdTipoLibro) });
         }
     }
 }

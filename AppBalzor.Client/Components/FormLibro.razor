@@ -1,17 +1,29 @@
 ﻿@inject NavigationManager navigationManager
-<h2>@titulo</h2>
 @inject LibroService LibroService
+@inject TipoLibroService tipoLibroService
+<h2>@titulo</h2>
 <EditForm Model="@oLibroFromCLS" OnValidSubmit="@guardar">
     <DataAnnotationsValidator />
     <div class="mt-3">
         <label>Id Libro</label>
-        <InputNumber class="form-control" @bind-Value="oLibroFromCLS.idLibro" />
+        <InputNumber readonly class="form-control" @bind-Value="oLibroFromCLS.idLibro" />
         <ValidationMessage For="(() => oLibroFromCLS.idLibro)" />
     </div>
     <div class="mt-3">
         <label>Titulo</label>
         <InputText class="form-control" @bind-Value="oLibroFromCLS.titulo" />
         <ValidationMessage For="(() => oLibroFromCLS.titulo)" />
+    </div>
+    <div class="mt-3">
+        <label>Seleccione Tipo De Libro</label>
+        <InputSelect class="form-control" @bind-Value="oLibroFromCLS.IdTipoLibro">
+            <option value="">-- Seleccione --</option>
+            @foreach (var item in listatipo)
+            {
+                <option value="@item.IdTipoLibro">@item.NombreTipoLibro</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="(() => oLibroFromCLS.IdTipoLibro)"/>
     </div>
     <div class="mt-3">
         <label>Resumen</label>
@@ -32,8 +44,12 @@
 
     public string titulo { get; set; } = "";
 
+    public List<TipoLibroCLS> listatipo { get; set; } = new List<TipoLibroCLS>();
+
     protected override Task OnInitializedAsync()
     {
+        listatipo = tipoLibroService.listarTipoLibros();
+
         if (idLibro == 0 ) titulo = "Agregar Libro";
         else
         {
