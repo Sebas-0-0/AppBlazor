@@ -37,9 +37,25 @@ namespace AppBalzor.Client.Services
         }
         public void guardarLibro(LibroFormCLS oLibroFormCLS)
         {
-            int idLibro = lista.Select(p => p.idLibro).Max() + 1;
-            lista.Add(new LibroListCLS { idLibro = idLibro, titulo = oLibroFormCLS.titulo,
-            NombreTipoLibro=tipoLibroService.obtenerNombreTipoLibro(oLibroFormCLS.IdTipoLibro) });
+            if(oLibroFormCLS.idLibro == 0)
+            {
+                int idLibro = lista.Select(p => p.idLibro).Max() + 1;
+                lista.Add(new LibroListCLS
+                {
+                    idLibro = idLibro,
+                    titulo = oLibroFormCLS.titulo,
+                    NombreTipoLibro = tipoLibroService.obtenerNombreTipoLibro(oLibroFormCLS.IdTipoLibro)
+                });
+            }
+            else
+            {
+                var obj = lista.Where(p => p.idLibro == oLibroFormCLS.idLibro).FirstOrDefault();
+                if (obj != null)
+                {
+                    obj.titulo = oLibroFormCLS.titulo;
+                    obj.NombreTipoLibro = tipoLibroService.obtenerNombreTipoLibro(oLibroFormCLS.IdTipoLibro);
+                }
+            }
         }
     }
 }

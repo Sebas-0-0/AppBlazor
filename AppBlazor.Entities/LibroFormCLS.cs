@@ -11,7 +11,7 @@ namespace AppBlazor.Entities
         [MaxLength (100, ErrorMessage ="La longitud maxima del titulo es de  100 caracteres")]
         public string titulo { get; set; } = null!;
         [Required (ErrorMessage = "El Resumen es Requerido")]
-        [MinLength(20, ErrorMessage = "La longitud minima del resumen es de 20 caracteres")]
+        [MinLength(5, ErrorMessage = "La longitud minima del resumen es de 5 caracteres")]
         public string resumen { get; set; } = null!;
         [Range(1, int.MaxValue, ErrorMessage = "Deve Seleccionar Un Tipo De Libro")]
         public int IdTipoLibro { get; set; }
